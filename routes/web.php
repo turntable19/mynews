@@ -23,6 +23,6 @@ Route::controller(ProfileController::class)->prefix('admin')->group(function() {
 });
 
 //Route::controller(AAAController::class)->group(function() {
-    Route::get('admin/bbb', 'add');
-});
+   // Route::get('admin/bbb', 'add');
+//});
 

@@ -26,3 +26,7 @@ Route::controller(ProfileController::class)->prefix('admin')->group(function() {
    // Route::get('admin/bbb', 'add');
 //});
 
+use App\Http\Controllers\Admin\NewsController;
+Route::controller(NewsController::class)->prefix('admin')->group(function() {
+    Route::get('news/create', 'add');
+});

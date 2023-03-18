@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use app\Models\profile;
 
 class ProfileController extends Controller
 {
@@ -15,6 +16,18 @@ class ProfileController extends Controller
 
     public function create(Request $request)
     {
+       // if (isset($form['image'])) {
+           // $path = $request->file('image')->store('public/image');
+           // $profile->image_path = basename($path);
+      //  } else {
+            //$profile->image_path = null;
+       // }
+       // unset($form['_token']);
+       // unset($form['image']);
+
+       // $profile->fill($form);
+       // $profile->save();
+
         return redirect('admin/profile/create');
     }
 

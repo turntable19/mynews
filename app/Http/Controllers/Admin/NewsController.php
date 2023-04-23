@@ -72,7 +72,10 @@ class NewsController extends Controller
         // News Modelからデータを取得する
         $news = News::find($request->id);
         // 送信されてきたフォームデータを格納する
-        $news_form = $request->all();
+        $formId = $request->get('id');
+        $formTitle = $request->get('title');
+        $formBody = $request->get('body');
+        $formImagePath = $request->get('image_path');
 
         if ($request->remove == 'true') { 
             $news_form['image_path'] = null;
@@ -85,10 +88,13 @@ class NewsController extends Controller
 
         unset($news_form['image']);
         unset($news_form['remove']);
-        unset($news_form['_token']);
 
         // 該当するデータを上書きして保存する
-        $news->fill($news_form)->save();
+        $news->update([
+            'title' => $formTitle,
+            'body' => $formBody,
+            'image_path' => $formImagePath,
+        ]);
 
         return redirect('admin/news');
     }

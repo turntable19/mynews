@@ -1,21 +1,24 @@
-@extends('layouts.admin')
+@extends('layouts.admin')   // layouts/admin.blade.phpを継承する
 
-@section('content')
+@section('content') {{-- layouts/admin.blade.phpの@yield('content')に以下のタグを埋め込む --}}
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="login-box card">
+        <div class="row justify-content-center">    
+            <div class="col-md-8">  
+                <div class="login-box card"> 
+
+                {{-- __は、ヘルパ関数（viewで使うための関数）の一種で、翻訳文字列の取得として使われます。 --}}
                     <div class="login-header card-header mx-auto">{{ __('messages.login') }}</div>
 
                     <div class="login-body card-body">
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
+                        <form method="POST" action="{{ route('login') }}"> {{-- route関数は、URLを生成したりリダイレクトしたりするための関数 --}}
+                            @csrf {{-- CSRF対策のためのトークンを生成してくれる --}}
 
                             <div class="form-group row">
-                                <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('messages.email') }}</label>
+                                <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('messages.email') }}</label>　
 
-                                <div class="col-md-6">
+                                <div class="col-md-6"> {{-- ここは、col-sm-6にすると、画面が小さいときに、入力欄が縮んでしまう --}}
                                     <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                                    {{-- oldヘルパ関数は、セッションにフラッシュデータ（一時的にしか保存されないデータ）として入力されているデータを取得することができる --}}
 
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback">

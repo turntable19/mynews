@@ -1,56 +1,61 @@
-{{-- layouts/profile.blade.phpを読み込む --}}
-@extends('layouts.profile')
-{{-- profile.blade.phpの@yield('title')に'My profileの新規作成'を埋め込む --}}
-@section('title', 'My Profile作成')
+@extends('layouts.admin')
+@section('title', '登録済みプロフィール')
 
-{{-- profile.blade.phpの@yield('content')に以下のタグを埋め込む --}}
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 mx-auto">
-                <h2>My Profile</h2>
-                <form action="{{ route('admin.profile.create') }}" method="post" enctype="multipart/form-data">
-
-                    @if (count($errors) > 0)
-                        <ul>
-                            @foreach($errors->all() as $e)
-                                <li>{{ $e }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
+            <h2>プロフィール一覧</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="{{ route('admin.profile.add') }}" role="button" class="btn btn-primary">新規作成</a>
+            </div>
+            <div class="col-md-8">
+                <form action="{{ route('admin.profile.index') }}" method="get">
                     <div class="form-group row">
-                        <label class="col-md-2">名前</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" name="name" value="{{ old('title') }}">
+                        <label class="col-md-2">氏名</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="cond_title" value="{{ $cond_name }}">
+                        </div>
+                        <div class="col-md-2">
+                            @csrf
+                            <input type="submit" class="btn btn-primary" value="検索">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2">性別</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" name="gender" value="{{ old('title') }}">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2">趣味</label>
-                        <div class="col-md-10">
-                            <textarea class="form-control" name="hobby" rows="20">{{ old('body') }}</textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2">自己紹介欄</label>
-                        <div class="col-md-10">
-                            <textarea class="form-control" name="introduction" rows="20">{{ old('body') }}</textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2">画像</label>
-                        <div class="col-md-10">
-                            <input type="file" class="form-control-file" name="image">
-                        </div>
-                    </div>
-                    @csrf
-                    <input type="submit" class="btn btn-primary" value="更新">
                 </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="list-news col-md-12 mx-auto">
+                <div class="row">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th width="10%">ID</th>
+                                <th width="20%">氏名</th>
+                                <th width="20%">趣味</th>
+                                <th width="20%">自己紹介欄</th>
+                                <th width="10%">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($posts as $profiles)
+                                <tr>
+                                    <th>{{ $profiles->id }}</th>
+                                    <td>{{ Str::limit($profiles->name, 100) }}</td>
+                                    <td>{{ Str::limit($profiles->hobby, 250) }}</td>
+                                    <td>{{ Str::limit($profiles->introduction, 250) }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.profile.edit', ['id' => $profiles->id]) }}">編集</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('admin.profile.delete', ['id' => $profiles->id]) }}">削除</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

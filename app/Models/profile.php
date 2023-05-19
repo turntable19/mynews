@@ -12,7 +12,7 @@ class profile extends Model
 
     public static $rules = array(
         'name' => 'required',
-        'render' => 'required',
+        'gender' => 'required',
         'hobby' => 'required',
         'introduction' => 'required',
     );

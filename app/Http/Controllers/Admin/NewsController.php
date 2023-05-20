@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\News;
+use App\Models\History;
+
+use Carbon\Carbon;
 
 class NewsController extends Controller
 {
@@ -95,6 +98,12 @@ class NewsController extends Controller
             'body' => $formBody,
             'image_path' => $formImagePath,
         ]);
+        
+        // 以下を追記
+        $history = new History();
+        $history->news_id = $news->id;
+        $history->edited_at = Carbon::now();//Carbonは日付操作ライブラリ
+        $history->save();
 
         return redirect('admin/news');
     }
